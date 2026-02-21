@@ -1,0 +1,46 @@
+name: Docker Build on Main
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  docker-backend:
+    name: Build Backend Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build backend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: false
+          tags: portfolio-backend:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  docker-frontend:
+    name: Build Frontend Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build frontend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: false
+          tags: portfolio-frontend:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
