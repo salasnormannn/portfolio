@@ -5,6 +5,12 @@ import Badge from '../components/ui/Badge'
 import useProjects from '../hooks/useProjects'
 
 const ProjectCard = ({ project, index }) => {
+  const githubUrl = project.github
+  const liveUrl = project.live
+  const techList = project.tech
+  const title = project.title
+  const description = project.description
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -18,9 +24,9 @@ const ProjectCard = ({ project, index }) => {
           {String(index + 1).padStart(2, '0')}
         </div>
         <div className="flex gap-3">
-          {project.github && (
-
-              href={project.github}
+          {githubUrl && (
+            <a
+              href={githubUrl}
               target="_blank"
               rel="noreferrer"
               className="text-text-muted hover:text-primary transition-colors"
@@ -29,9 +35,9 @@ const ProjectCard = ({ project, index }) => {
               <FiGithub size={18} />
             </a>
           )}
-          {project.live && (
-
-              href={project.live}
+          {liveUrl && (
+            <a
+              href={liveUrl}
               target="_blank"
               rel="noreferrer"
               className="text-text-muted hover:text-secondary transition-colors"
@@ -44,14 +50,14 @@ const ProjectCard = ({ project, index }) => {
       </div>
 
       <h3 className="text-text-primary font-semibold text-lg mb-2 group-hover:text-primary transition-colors">
-        {project.title}
+        {title}
       </h3>
       <p className="text-text-secondary text-sm leading-relaxed flex-1 mb-4">
-        {project.description}
+        {description}
       </p>
 
       <div className="flex flex-wrap gap-2">
-        {project.tech.map((t) => (
+        {techList.map((t) => (
           <Badge key={t}>{t}</Badge>
         ))}
       </div>

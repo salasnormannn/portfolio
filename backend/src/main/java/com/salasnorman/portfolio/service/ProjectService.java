@@ -17,7 +17,7 @@ public class ProjectService {
                                 "Implements inheritance, polymorphism, encapsulation, and abstraction " +
                                 "to manage farm entities and operations.")
                         .tech(Arrays.asList("Java", "OOP", "CLI"))
-                        .github("https://github.com/salasnormannn/farm-io")
+                        .github("https://github.com/salasnormannn/portfolio/tree/develop")
                         .featured(true)
                         .build(),
 
@@ -28,7 +28,7 @@ public class ProjectService {
                                 "management, order processing, and real-time inventory updates " +
                                 "with a clean command-line interface.")
                         .tech(Arrays.asList("Java", "OOP", "Data Structures"))
-                        .github("https://github.com/salasnormannn/ordering-inventory")
+                        .github("https://github.com/salasnormannn/portfolio/tree/develop")
                         .featured(true)
                         .build(),
 
@@ -39,7 +39,7 @@ public class ProjectService {
                                 "availability checks, and conflict resolution using Java collections " +
                                 "and file-based persistence.")
                         .tech(Arrays.asList("Java", "OOP", "File I/O"))
-                        .github("https://github.com/salasnormannn/reservation-system")
+                        .github("https://github.com/salasnormannn/portfolio/tree/develop")
                         .featured(true)
                         .build(),
 
@@ -50,7 +50,7 @@ public class ProjectService {
                                 "player management, property trading, and turn-based mechanics " +
                                 "using object-oriented design patterns.")
                         .tech(Arrays.asList("Java", "OOP", "Game Logic", "Design Patterns"))
-                        .github("https://github.com/salasnormannn/monopoly-cli")
+                        .github("https://github.com/salasnormannn/portfolio/tree/develop")
                         .featured(false)
                         .build()
         );
