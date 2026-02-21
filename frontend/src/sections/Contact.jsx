@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { FiSend, FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
 import SectionTitle from '../components/ui/SectionTitle'
 import { PERSONAL_INFO } from '../constants'
+import { sendContactMessage } from '../services/api'
 
 const Contact = () => {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
@@ -11,15 +12,19 @@ const Contact = () => {
   const handleChange = (e) =>
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setStatus('sending')
-    // API integration comes in Phase 5
-    setTimeout(() => {
-      setStatus('success')
-      setForm({ name: '', email: '', message: '' })
-    }, 1000)
+// Replace the handleSubmit function with this:
+const handleSubmit = async (e) => {
+  e.preventDefault()
+  setStatus('sending')
+  try {
+    await sendContactMessage(form)
+    setStatus('success')
+    setForm({ name: '', email: '', message: '' })
+  } catch (err) {
+    console.error('Contact error:', err)
+    setStatus('error')
   }
+}
 
   const inputClass = `w-full bg-surface border border-border rounded-lg px-4 py-3
     text-text-primary placeholder-text-muted text-sm
@@ -108,6 +113,17 @@ const Contact = () => {
               ✓ Message sent! I'll get back to you soon.
             </motion.p>
           )}
+
+          {status === 'error' && (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-red-400 text-sm text-center font-mono"
+            >
+              ✗ Something went wrong. Please try again.
+            </motion.p>
+          )}
+
         </motion.form>
       </div>
     </section>
