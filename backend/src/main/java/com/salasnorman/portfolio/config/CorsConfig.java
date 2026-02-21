@@ -15,7 +15,7 @@ public class CorsConfig implements WebMvcConfigurer {
                         "http://localhost:3000",
                         "https://salasnorman.dev",
                         "https://www.salasnorman.dev",
-                        "https://portfolio-norman.vercel.app"  // your Vercel URL
+                        "https://portfolio-frontend-mauve-six.vercel.app/"  // This is my actual server
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
