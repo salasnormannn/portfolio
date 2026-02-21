@@ -15,10 +15,13 @@ public class CorsConfig implements WebMvcConfigurer {
                         "http://localhost:3000",
                         "https://salasnorman.dev",
                         "https://www.salasnorman.dev",
-                        "https://portfolio-frontend-mauve-six.vercel.app/"  // This is my actual server
+                        "https://portfolio-frontend-mauve-six.vercel.app",
+                        "https://portfolio-frontend-git-main-salasnormannns-projects.vercel.app",
+                        "https://portfolio-frontend-5exlwg3yp-salasnormannns-projects.vercel.app"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
+                .allowCredentials(false)
                 .maxAge(3600);
     }
 }
