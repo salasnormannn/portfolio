@@ -1,0 +1,33 @@
+# ─── OS FILES ───────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── ENVIRONMENT / SECRETS (NEVER COMMIT THESE) ─────────
+.env
+.env.local
+.env.production
+.env.development
+
+# ─── FRONTEND ───────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/coverage/
+
+# ─── BACKEND ────────────────────────────────────────────
+backend/target/
+backend/.mvn/
+backend/*.class
+backend/*.jar
+backend/*.war
+
+# ─── IDE FILES ──────────────────────────────────────────
+.idea/
+*.iml
+.vscode/settings.json
+*.suo
+*.user
+
+# ─── DOCKER ─────────────────────────────────────────────
+*.log
