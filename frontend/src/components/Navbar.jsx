@@ -5,9 +5,20 @@ import { NAV_LINKS } from '../constants'
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('')
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50)
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50)
+      const sections = NAV_LINKS.map((l) => l.href.replace('#', ''))
+      for (const section of sections.reverse()) {
+        const el = document.getElementById(section)
+        if (el && window.scrollY >= el.offsetTop - 120) {
+          setActiveSection(section)
+          break
+        }
+      }
+    }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
@@ -24,36 +35,41 @@ const Navbar = () => {
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-
-        {/* Logo */}
         <a href="#" className="font-mono text-primary font-bold text-lg tracking-tight">
           ns<span className="text-secondary">.</span>dev
         </a>
 
-        {/* Desktop Links */}
         <ul className="hidden md:flex items-center gap-8">
-          {NAV_LINKS.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="font-mono text-sm text-text-secondary hover:text-primary transition-colors duration-200"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
+          {NAV_LINKS.map((link) => {
+            const isActive = activeSection === link.href.replace('#', '')
+            return (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  className={`font-mono text-sm transition-colors duration-200 relative ${
+                    isActive
+                      ? 'text-primary'
+                      : 'text-text-secondary hover:text-primary'
+                  }`}
+                >
+                  {link.label}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeSection"
+                      className="absolute -bottom-1 left-0 right-0 h-px bg-primary"
+                    />
+                  )}
+                </a>
+              </li>
+            )
+          })}
           <li>
-            <a
-              href="/resume.pdf"
-              download
-              className="btn-primary text-sm py-2 px-4"
-            >
+            <a href="/resume.pdf" download className="btn-primary text-sm py-2 px-4">
               Resume
             </a>
           </li>
         </ul>
 
-        {/* Mobile Hamburger */}
         <button
           className="md:hidden text-text-secondary hover:text-primary transition-colors"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -65,7 +81,6 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {menuOpen && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
