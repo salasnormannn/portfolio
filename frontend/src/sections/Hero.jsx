@@ -40,7 +40,7 @@ const Hero = () => {
   const roles = [
     'Java Developer',
     'DevOps Engineer',
-    'Backend Engineer',
+    'Backend Developer',
     'Spring Boot Developer',
   ]
   const typewriterText = useTypewriter(roles, 80, 2000)
