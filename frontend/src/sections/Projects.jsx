@@ -1,16 +1,62 @@
-import { motion } from 'framer-motion'
-import { FiGithub, FiExternalLink } from 'react-icons/fi'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FiX, FiEye } from 'react-icons/fi'
 import SectionTitle from '../components/ui/SectionTitle'
 import Badge from '../components/ui/Badge'
 import useProjects from '../hooks/useProjects'
 
-const ProjectCard = ({ project, index }) => {
-  const githubUrl = project.github
-  const liveUrl = project.live
-  const techList = project.tech
-  const title = project.title
-  const description = project.description
+const ImageModal = ({ project, onClose }) => {
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={onClose}
+        className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      >
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.9, opacity: 0 }}
+          onClick={(e) => e.stopPropagation()}
+          className="bg-surface border border-border rounded-2xl overflow-hidden max-w-3xl w-full"
+        >
+          <div className="flex justify-between items-center px-5 py-4 border-b border-border">
+            <div>
+              <h3 className="text-text-primary font-semibold">{project.title}</h3>
+              <p className="text-text-muted text-xs font-mono mt-0.5">{project.tech.join(' · ')}</p>
+            </div>
+            <button
+              onClick={onClose}
+              className="text-text-muted hover:text-primary transition-colors p-1"
+            >
+              <FiX size={20} />
+            </button>
+          </div>
+          <div className="p-4">
+            {project.image ? (
+              <img
+                src={project.image}
+                alt={project.title}
+                className="w-full rounded-lg object-cover max-h-96"
+              />
+            ) : (
+              <div className="w-full h-48 bg-background rounded-lg flex items-center justify-center">
+                <p className="text-text-muted font-mono text-sm">No preview available</p>
+              </div>
+            )}
+            <p className="text-text-secondary text-sm leading-relaxed mt-4">
+              {project.description}
+            </p>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  )
+}
 
+const ProjectCard = ({ project, index, onView }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -21,43 +67,27 @@ const ProjectCard = ({ project, index }) => {
     >
       <div className="flex justify-between items-start mb-4">
         <div className="w-10 h-10 bg-primary/10 border border-primary/20 rounded-lg flex items-center justify-center text-primary font-mono font-bold text-sm">
-          {String(index + 1).padStart(2, '0')}
+          {String(index + 1).padStart(2, '00')}
         </div>
-        <div className="flex gap-3">
-          {githubUrl && (
-            <a
-              href={githubUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="text-text-muted hover:text-primary transition-colors"
-              aria-label="GitHub repository"
-            >
-              <FiGithub size={18} />
-            </a>
-          )}
-          {liveUrl && (
-            <a
-              href={liveUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="text-text-muted hover:text-secondary transition-colors"
-              aria-label="Live demo"
-            >
-              <FiExternalLink size={18} />
-            </a>
-          )}
-        </div>
+        <button
+          onClick={() => onView(project)}
+          className="text-text-muted hover:text-primary transition-colors flex items-center gap-1.5 text-xs font-mono"
+          aria-label="View project preview"
+        >
+          <FiEye size={16} />
+          <span>Preview</span>
+        </button>
       </div>
 
       <h3 className="text-text-primary font-semibold text-lg mb-2 group-hover:text-primary transition-colors">
-        {title}
+        {project.title}
       </h3>
       <p className="text-text-secondary text-sm leading-relaxed flex-1 mb-4">
-        {description}
+        {project.description}
       </p>
 
       <div className="flex flex-wrap gap-2">
-        {techList.map((t) => (
+        {project.tech.map((t) => (
           <Badge key={t}>{t}</Badge>
         ))}
       </div>
@@ -80,6 +110,7 @@ const ProjectSkeleton = () => (
 
 const Projects = () => {
   const { projects, loading } = useProjects()
+  const [selectedProject, setSelectedProject] = useState(null)
 
   return (
     <section id="projects" className="section-container">
@@ -88,14 +119,27 @@ const Projects = () => {
         title="Things I've Built"
         subtitle="A selection of projects that demonstrate my approach to software development."
       />
-      <div className="grid md:grid-cols-2 gap-6">
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {loading
-          ? Array(4).fill(0).map((_, i) => <ProjectSkeleton key={i} />)
+          ? Array(6).fill(0).map((_, i) => <ProjectSkeleton key={i} />)
           : projects.map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
+              <ProjectCard
+                key={project.id}
+                project={project}
+                index={index}
+                onView={setSelectedProject}
+              />
             ))
         }
       </div>
+
+      {selectedProject && (
+        <ImageModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
+      )}
     </section>
   )
 }
