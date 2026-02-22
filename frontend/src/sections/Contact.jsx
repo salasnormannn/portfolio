@@ -1,30 +1,40 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import emailjs from '@emailjs/browser'
 import { FiSend, FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
 import SectionTitle from '../components/ui/SectionTitle'
 import { PERSONAL_INFO } from '../constants'
-import { sendContactMessage } from '../services/api'
 
 const Contact = () => {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
-  const [status, setStatus] = useState(null) // null | 'sending' | 'success' | 'error'
+  const [status, setStatus] = useState(null)
 
   const handleChange = (e) =>
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
 
-// Replace the handleSubmit function with this:
-const handleSubmit = async (e) => {
-  e.preventDefault()
-  setStatus('sending')
-  try {
-    await sendContactMessage(form)
-    setStatus('success')
-    setForm({ name: '', email: '', message: '' })
-  } catch (err) {
-    console.error('Contact error:', err)
-    setStatus('error')
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setStatus('sending')
+
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: form.name,
+          from_email: form.email,
+          message: form.message,
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
+
+      setStatus('success')
+      setForm({ name: '', email: '', message: '' })
+    } catch (err) {
+      console.error('EmailJS error:', err)
+      setStatus('error')
+    }
   }
-}
 
   const inputClass = `w-full bg-surface border border-border rounded-lg px-4 py-3
     text-text-primary placeholder-text-muted text-sm
@@ -40,7 +50,6 @@ const handleSubmit = async (e) => {
       />
 
       <div className="grid md:grid-cols-2 gap-12">
-        {/* Left — info */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -48,30 +57,39 @@ const handleSubmit = async (e) => {
           className="space-y-8"
         >
           <p className="text-text-secondary leading-relaxed">
-            I'm looking for Junior Java Developer or DevOps Engineer roles where
+            I am looking for Junior Java Developer or DevOps Engineer roles where
             I can contribute, learn, and grow with a great team.
           </p>
 
           <div className="space-y-4">
-            <a href={`mailto:${PERSONAL_INFO.email}`}
-              className="flex items-center gap-3 text-text-secondary hover:text-primary transition-colors">
+            <a
+              href={`mailto:${PERSONAL_INFO.email}`}
+              className="flex items-center gap-3 text-text-secondary hover:text-primary transition-colors"
+            >
               <FiMail size={18} />
               <span className="font-mono text-sm">{PERSONAL_INFO.email}</span>
             </a>
-            <a href={PERSONAL_INFO.github} target="_blank" rel="noreferrer"
-              className="flex items-center gap-3 text-text-secondary hover:text-primary transition-colors">
+            <a
+              href={PERSONAL_INFO.github}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-3 text-text-secondary hover:text-primary transition-colors"
+            >
               <FiGithub size={18} />
               <span className="font-mono text-sm">GitHub</span>
             </a>
-            <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noreferrer"
-              className="flex items-center gap-3 text-text-secondary hover:text-primary transition-colors">
+            <a
+              href={PERSONAL_INFO.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-3 text-text-secondary hover:text-primary transition-colors"
+            >
               <FiLinkedin size={18} />
               <span className="font-mono text-sm">LinkedIn</span>
             </a>
           </div>
         </motion.div>
 
-        {/* Right — form */}
         <motion.form
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -80,19 +98,31 @@ const handleSubmit = async (e) => {
           className="space-y-4"
         >
           <input
-            type="text" name="name" placeholder="Your Name"
-            value={form.name} onChange={handleChange}
-            required className={inputClass}
+            type="text"
+            name="name"
+            placeholder="Your Name"
+            value={form.name}
+            onChange={handleChange}
+            required
+            className={inputClass}
           />
           <input
-            type="email" name="email" placeholder="Your Email"
-            value={form.email} onChange={handleChange}
-            required className={inputClass}
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            value={form.email}
+            onChange={handleChange}
+            required
+            className={inputClass}
           />
           <textarea
-            name="message" placeholder="Your Message" rows={5}
-            value={form.message} onChange={handleChange}
-            required className={`${inputClass} resize-none`}
+            name="message"
+            placeholder="Your Message"
+            rows={5}
+            value={form.message}
+            onChange={handleChange}
+            required
+            className={`${inputClass} resize-none`}
           />
 
           <button
@@ -110,7 +140,7 @@ const handleSubmit = async (e) => {
               animate={{ opacity: 1 }}
               className="text-secondary text-sm text-center font-mono"
             >
-              ✓ Message sent! I'll get back to you soon.
+              Message sent! I will get back to you soon.
             </motion.p>
           )}
 
@@ -120,10 +150,9 @@ const handleSubmit = async (e) => {
               animate={{ opacity: 1 }}
               className="text-red-400 text-sm text-center font-mono"
             >
-              ✗ Something went wrong. Please try again.
+              Something went wrong. Please try again.
             </motion.p>
           )}
-
         </motion.form>
       </div>
     </section>
