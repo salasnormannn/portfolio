@@ -14,7 +14,7 @@ export const PERSONAL_INFO = {
 
 // ─── SKILLS ───────────────────────────────────────────────────
 export const SKILLS = [
-  { name: "Java",           category: "Backend",  level: 85 },
+  { name: "Java",           category: "Backend",  level: 80 },
   { name: "Spring Boot",    category: "Backend",  level: 75 },
   { name: "REST APIs",      category: "Backend",  level: 75 },
   { name: "Node.js",        category: "Backend",  level: 70 },
@@ -24,11 +24,11 @@ export const SKILLS = [
   { name: "HTML & CSS",     category: "Frontend", level: 80 },
   { name: "Kotlin",         category: "Frontend", level: 65 },
   { name: "Docker",         category: "DevOps",   level: 65 },
-  { name: "GitHub Actions", category: "DevOps",   level: 65 },
-  { name: "Git & Linux",    category: "DevOps",   level: 80 },
+  { name: "GitHub Actions", category: "DevOps",   level: 70 },
+  { name: "Git & Linux",    category: "DevOps",   level: 70 },
   { name: "Kafka",          category: "DevOps",   level: 70 },
   { name: "Elasticsearch",  category: "DevOps",   level: 70 },
-  { name: "Kibana",         category: "DevOps",   level: 68 },
+  { name: "Kibana",         category: "DevOps",   level: 65 },
   { name: "Flink",          category: "DevOps",   level: 65 },
   { name: "MySQL",          category: "Database", level: 75 },
   { name: "MongoDB",        category: "Database", level: 70 },
@@ -100,14 +100,15 @@ export const PROJECTS = [
   },
   {
     id: 6,
-    title: "Monopoly CLI Game",
+    title: "The Vinyl Vault",
     description:
-      "A fully playable command-line Monopoly game implementing complete game logic from scratch. " +
-      "Handles player turns, property purchasing, rent collection, trading, and bankruptcy rules " +
-      "using object-oriented design patterns — demonstrating how real-world game systems " +
-      "can be modeled cleanly in Java.",
-    tech: ["Java", "OOP", "Game Logic", "Design Patterns"],
-    image: "/projects/monopoly.png",
+      "A vinyl record showcase and e-commerce shop featuring genre filtering, " +
+      "search, price sorting, and a cart system. Built as a team project where " +
+      "I was specifically responsible for the backend database architecture — " +
+      "designing and managing the MongoDB product schema, handling CRUD operations, " +
+      "and connecting the database layer to the frontend shop interface.",
+    tech: ["JavaScript", "HTML", "CSS", "MongoDB", "Node.js"],
+    image: "/projects/vinyl-vault.png",
     featured: false,
   },
 ]
