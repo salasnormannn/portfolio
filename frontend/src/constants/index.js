@@ -5,7 +5,7 @@ export const PERSONAL_INFO = {
   email: "salasnormanlee9@gmail.com",
   github: "https://github.com/salasnormannn",
   linkedin: "https://www.linkedin.com/in/norman-lee-salas-b8408331b/",
-  domain: "https://salasnorman.dev",
+  domain: "https://salasnorman.it.com",
   intro:
     "Information Technology graduate with experience in Java development, " +
     "DevOps workflows, and full-stack systems. Passionate about building " +
