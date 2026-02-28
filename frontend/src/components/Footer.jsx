@@ -11,7 +11,7 @@ const Footer = () => (
         Designed & Built by{' '}
         <span className="text-text-secondary">Norman Lee Salas</span>
         {' · '}
-        <span className="text-primary">salasnorman.dev</span>
+        <span className="text-primary">salasnorman.it.com</span>
       </p>
       <p className="font-mono text-text-muted text-xs">
         © {new Date().getFullYear()}
