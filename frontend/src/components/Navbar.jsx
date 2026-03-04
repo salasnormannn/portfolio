@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { NAV_LINKS } from '../constants'
+import ThemeToggle from './ui/ThemeToggle'
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false)
@@ -35,10 +36,12 @@ const Navbar = () => {
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        {/* Logo */}
         <a href="#" className="font-mono text-primary font-bold text-lg tracking-tight">
           ns<span className="text-secondary">.</span>dev
         </a>
 
+        {/* Desktop nav */}
         <ul className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map((link) => {
             const isActive = activeSection === link.href.replace('#', '')
@@ -68,19 +71,28 @@ const Navbar = () => {
               Resume
             </a>
           </li>
+          {/* Theme toggle */}
+          <li>
+            <ThemeToggle />
+          </li>
         </ul>
 
-        <button
-          className="md:hidden text-text-secondary hover:text-primary transition-colors"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
-        >
-          <div className={`w-5 h-0.5 bg-current transition-all ${menuOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
-          <div className={`w-5 h-0.5 bg-current my-1 transition-all ${menuOpen ? 'opacity-0' : ''}`} />
-          <div className={`w-5 h-0.5 bg-current transition-all ${menuOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
-        </button>
+        {/* Mobile — toggle + hamburger */}
+        <div className="md:hidden flex items-center gap-3">
+          <ThemeToggle />
+          <button
+            className="text-text-secondary hover:text-primary transition-colors"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            <div className={`w-5 h-0.5 bg-current transition-all ${menuOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
+            <div className={`w-5 h-0.5 bg-current my-1 transition-all ${menuOpen ? 'opacity-0' : ''}`} />
+            <div className={`w-5 h-0.5 bg-current transition-all ${menuOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
+          </button>
+        </div>
       </div>
 
+      {/* Mobile menu */}
       {menuOpen && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
