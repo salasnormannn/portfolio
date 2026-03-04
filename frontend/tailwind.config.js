@@ -4,20 +4,22 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       // ─── BRAND COLORS ────────────────────────────────────────
       colors: {
-        background: "#0a0a0f",      // deep dark background
-        surface: "#12121a",         // card/section background
-        border: "#1e1e2e",          // subtle borders
-        primary: "#6366f1",         // indigo — your accent color
-        "primary-hover": "#4f46e5", // darker indigo on hover
-        secondary: "#22d3ee",       // cyan — secondary accent
-        muted: "#3f3f5a",           // muted elements
-        "text-primary": "#e2e8f0",  // main text
-        "text-secondary": "#94a3b8",// secondary text / labels
-        "text-muted": "#475569",    // muted text
+        // Dark mode (default)
+        background: "var(--color-background)",
+        surface: "var(--color-surface)",
+        border: "var(--color-border)",
+        primary: "#6366f1",
+        "primary-hover": "#4f46e5",
+        secondary: "#22d3ee",
+        muted: "var(--color-muted)",
+        "text-primary": "var(--color-text-primary)",
+        "text-secondary": "var(--color-text-secondary)",
+        "text-muted": "var(--color-text-muted)",
       },
 
       // ─── TYPOGRAPHY ──────────────────────────────────────────
@@ -50,5 +52,3 @@ export default {
   },
   plugins: [],
 }
-
-

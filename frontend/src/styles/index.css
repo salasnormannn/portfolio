@@ -1,3 +1,4 @@
+@import './theme.css';
 /* ─── TAILWIND DIRECTIVES ───────────────────────────────────── */
 @tailwind base;
 @tailwind components;
